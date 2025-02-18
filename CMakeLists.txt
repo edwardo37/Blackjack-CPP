@@ -3,7 +3,7 @@ project(Blackjack)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Blackjack main.cpp
+add_executable(Blackjack blackjack.cpp
         card.h
         player.h
         cardGame.cpp)
