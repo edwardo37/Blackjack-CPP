@@ -18,6 +18,8 @@ public:
     void drawCard(Deck &);
     void discardCard(const Card *);
 
+    const Card * operator[](int) const;
+
     void printHand() const;
 };
 

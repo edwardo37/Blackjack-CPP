@@ -12,24 +12,23 @@
 #include "card.h"
 #include "player.h"
 
-const char* SUITS[] = {
-    "heart", "diamond", "club", "spade"
-};
-constexpr int NUM_SUITS = 4;
+namespace pack52 {
+    const char* SUITS[] = {
+        "heart", "diamond", "club", "spade"
+    }; constexpr int NUM_SUITS = 4;
 
-const char* RANKS[] = {
-    "ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"
-};
-constexpr int NUM_RANKS = 13;
-
+    const char* RANKS[] = {
+        "ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"
+    }; constexpr int NUM_RANKS = 13;
+}
 
 Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
 Card::Card(const Card * oldCard) : suit(oldCard->suit), rank(oldCard->rank), owner_(oldCard->owner_) {}
 
 Deck::Deck() {
-    for (int s=0; s<NUM_SUITS; ++s) {
-        for (int r=0; r<NUM_RANKS; ++r) {
+    for (int s=0; s<pack52::NUM_SUITS; ++s) {
+        for (int r=0; r<pack52::NUM_RANKS; ++r) {
             cards_.push_back(new Card(s, r, this));
         }
     }
@@ -59,14 +58,11 @@ void Player::drawCard(Deck & deck) {
     hand_.push_front(deck.drawCard());
 }
 
-const Card * Deck::operator[](const int pos) const {
-    return cards_.at(pos);
-}
-
+// USE ONLY FOR DEBUGGING
 void Deck::print() const {
     std::cout << "Cards in deck:" << std::endl;
     for (const Card * card : cards_) {
-        std::cout << RANKS[card->rank] << " of " << SUITS[card->suit] << "s\n";
+        std::cout << pack52::RANKS[card->rank] << " of " << pack52::SUITS[card->suit] << "s\n";
     }
     std::cout << std::endl;
 }
@@ -90,10 +86,13 @@ void Player::discardCard(const Card * card) {
     std::erase(hand_, card);
 }
 
+const Card * Player::operator[](const int index) const {
+    return hand_[index];
+}
+
 void Player::printHand() const {
     std::cout << "Cards in hand:" << std::endl;
-    for (const Card * card : hand_) {
-        std::cout << RANKS[card->rank] << " of " << SUITS[card->suit] << "s\n";
+    for (int c=1; c<=hand_.size(); ++c) {
+        std::cout << c << ". " << pack52::RANKS[hand_[c-1]->rank] << " of " << pack52::SUITS[hand_[c-1]->suit] << "s\n";
     }
-    std::cout << std::endl;
 }

@@ -32,8 +32,6 @@ public:
     const Card * drawCard();
     void discardCard(const Card *);
 
-    const Card * operator[](int) const;
-
     void print() const;
 };
 
