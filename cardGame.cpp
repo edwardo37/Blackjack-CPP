@@ -12,6 +12,7 @@
 #include "card.h"
 #include "player.h"
 
+// Lookup tables, for convenience
 namespace pack52 {
     const char* SUITS[] = {
         "heart", "diamond", "club", "spade"
@@ -26,8 +27,8 @@ namespace pack52 {
 Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
 Deck::Deck() {
-    for (int s=0; s<pack52::NUM_SUITS; ++s) {
-        for (int r=0; r<pack52::NUM_RANKS; ++r) {
+    for (int s=1; s<=pack52::NUM_SUITS; ++s) {
+        for (int r=1; r<=pack52::NUM_RANKS; ++r) {
             cards_.push_back(new Card(s, r, this));
         }
     }
@@ -38,6 +39,7 @@ Deck::~Deck() {
         delete card;
     }
 }
+
 
 void Deck::shuffle() {
     std::random_device rd;
@@ -61,7 +63,7 @@ void Player::drawCard(Deck & deck) {
 void Deck::print() const {
     std::cout << "Cards in deck:" << std::endl;
     for (const Card * card : cards_) {
-        std::cout << pack52::RANKS[card->rank] << " of " << pack52::SUITS[card->suit] << "s\n";
+        std::cout << pack52::RANKS[card->rank-1] << " of " << pack52::SUITS[card->suit-1] << "s\n";
     }
     std::cout << std::endl;
 }
@@ -93,6 +95,7 @@ const Card * Player::operator[](const int index) const {
 void Player::printHand() const {
     std::cout << "Cards in hand:" << std::endl;
     for (int c=1; c<=hand_.size(); ++c) {
-        std::cout << c << ". " << pack52::RANKS[hand_[c-1]->rank] << " of " << pack52::SUITS[hand_[c-1]->suit] << "s\n";
+        std::cout << c << ". " << pack52::RANKS[hand_[c-1]->rank-1] << " of " << pack52::SUITS[hand_[c-1]->suit-1] << "s\n";
     }
+    std::cout << std::endl;
 }

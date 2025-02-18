@@ -7,6 +7,7 @@
 #include "card.h"
 #include "player.h"
 
+// main is here for testing, until finalized
 int main() {
     Deck deck;
     deck.shuffle();
@@ -20,6 +21,7 @@ int main() {
 
     player1.discardCard(0);
 
+    deck.print();
     player1.printHand();
 
     return 0;
