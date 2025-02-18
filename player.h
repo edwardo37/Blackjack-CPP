@@ -16,7 +16,7 @@ public:
     ~Player();
 
     void drawCard(Deck &);
-    void discardCard(const Card *);
+    void discardCard(int);
 
     const Card * operator[](int) const;
 

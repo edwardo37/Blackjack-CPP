@@ -9,9 +9,16 @@
 
 int main() {
     Deck deck;
+    deck.shuffle();
+
     Player player1;
 
     player1.drawCard(deck);
+    player1.drawCard(deck);
+
+    player1.printHand();
+
+    player1.discardCard(0);
 
     player1.printHand();
 

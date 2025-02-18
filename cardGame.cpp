@@ -72,7 +72,7 @@ Player::Player() = default;
 
 Player::~Player() {
     for (const Card * card : hand_) {
-        discardCard(card);
+        discardCard(0);
     }
 }
 
@@ -80,7 +80,8 @@ Player::~Player() {
 void Deck::discardCard(const Card * card) {
     cards_.push_back(card);
 }
-void Player::discardCard(const Card * card) {
+void Player::discardCard(const int index) {
+    const Card * card = hand_[index];
     card->owner_->discardCard(card);
     // Every card is unique in the hand, so I don't feel as bad using erase
     std::erase(hand_, card);
