@@ -22,9 +22,8 @@ namespace pack52 {
     }; constexpr int NUM_RANKS = 13;
 }
 
-Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
-Card::Card(const Card * oldCard) : suit(oldCard->suit), rank(oldCard->rank), owner_(oldCard->owner_) {}
+Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
 Deck::Deck() {
     for (int s=0; s<pack52::NUM_SUITS; ++s) {

@@ -18,7 +18,6 @@ public:
     Deck * owner_;
 
     Card(int, int, Deck *);
-    explicit Card(const Card *);
 };
 
 class Deck {
