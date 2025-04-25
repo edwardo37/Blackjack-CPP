@@ -65,7 +65,6 @@ void Player::drawCard(Deck & deck) {
     hand_.push_front(deck.drawCard());
 }
 
-// USE ONLY FOR DEBUGGING
 void Deck::_print() const {
     std::cout << "Cards in deck:" << std::endl;
     for (const Card * card : cards_) {

@@ -35,6 +35,7 @@ public:
     // Discard a card back into the deck it is owned by
     void discardCard(const Card *);
 
+    // The underscore is here to remind you that most games don't let the player see the deck
     void _print() const;
 };
 
