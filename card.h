@@ -31,7 +31,7 @@ public:
     const Card * drawCard();
     void discardCard(const Card *);
 
-    void print() const;
+    void _print() const;
 };
 
 #endif //CARD_H

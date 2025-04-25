@@ -60,7 +60,7 @@ void Player::drawCard(Deck & deck) {
 }
 
 // USE ONLY FOR DEBUGGING
-void Deck::print() const {
+void Deck::_print() const {
     std::cout << "Cards in deck:" << std::endl;
     for (const Card * card : cards_) {
         std::cout << pack52::RANKS[card->rank-1] << " of " << pack52::SUITS[card->suit-1] << "s\n";

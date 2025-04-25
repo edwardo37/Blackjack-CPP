@@ -21,7 +21,7 @@ int main() {
 
     player1.discardCard(0);
 
-    deck.print();
+    deck._print();
     player1.printHand();
 
     return 0;
