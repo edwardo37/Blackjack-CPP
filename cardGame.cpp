@@ -78,6 +78,7 @@ void Deck::_print() const {
 Player::Player() = default;
 
 Player::~Player() {
+    std::cout << "Destroying player. Discarding all cards." << std::endl;
     for (const Card * card : hand_) {
         discardCard(0);
     }

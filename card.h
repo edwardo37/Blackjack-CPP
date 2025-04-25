@@ -10,11 +10,13 @@
 
 class Deck;
 
+// A common playing card class
 class Card {
 public:
     const int suit;
     const int rank;
 
+    // Each card belongs to a deck, so when it is discarded, it goes back into the same deck.
     Deck * owner_;
 
     Card(int, int, Deck *);
@@ -28,7 +30,9 @@ public:
 
     void shuffle();
 
+    // Get a card from this deck
     const Card * drawCard();
+    // Discard a card back into the deck it is owned by
     void discardCard(const Card *);
 
     void _print() const;

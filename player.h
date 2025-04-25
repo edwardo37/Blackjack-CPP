@@ -15,11 +15,15 @@ public:
     Player();
     ~Player();
 
+    // Draw a card from a deck
     void drawCard(Deck &);
+    // Discard a card in hand by its index
     void discardCard(int);
 
+    // Access a card by its index
     const Card * operator[](int) const;
 
+    // Print all cards in the hand
     void printHand() const;
 };
 
