@@ -15,8 +15,8 @@ int main() {
 
     Player player1;
 
-    player1.drawCard(deck);
-    player1.drawCard(deck);
+    // player1.drawCard(deck);
+    // player1.drawCard(deck);
 
     player1.printHand();
 
