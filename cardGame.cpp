@@ -27,6 +27,7 @@ namespace pack52 {
 Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
 Deck::Deck() {
+    std::cout << "Creating deck, with " << pack52::NUM_SUITS << " suits and " << pack52::NUM_RANKS << " ranks." << std::endl;
     for (int s=1; s<=pack52::NUM_SUITS; ++s) {
         for (int r=1; r<=pack52::NUM_RANKS; ++r) {
             cards_.push_back(new Card(s, r, this));
@@ -35,6 +36,7 @@ Deck::Deck() {
 }
 
 Deck::~Deck() {
+    std::cout << "Destroying deck." << std::endl;
     for (const Card* card : cards_) {
         delete card;
     }
@@ -49,6 +51,8 @@ void Deck::shuffle() {
 
 
 const Card * Deck::drawCard() {
+    std::cout << "Retrieving card from deck..." << std::endl;
+
     const Card * newCard = cards_.front();
     cards_.pop_front();
     return newCard;
@@ -56,6 +60,8 @@ const Card * Deck::drawCard() {
 // At first, I thought pop deallocated an object,
 // then I realized I am an idiot who does not know how values and references work
 void Player::drawCard(Deck & deck) {
+    std::cout << "Drawing card..." << std::endl;
+
     hand_.push_front(deck.drawCard());
 }
 
@@ -79,9 +85,11 @@ Player::~Player() {
 
 
 void Deck::discardCard(const Card * card) {
+    std::cout << "Discarding card to deck..." << std::endl;
     cards_.push_back(card);
 }
 void Player::discardCard(const int index) {
+    std::cout << "Discarding card..." << std::endl;
     const Card * card = hand_[index];
     card->owner_->discardCard(card);
     // Every card is unique in the hand, so I don't feel as bad using erase

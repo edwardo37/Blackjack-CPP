@@ -11,6 +11,7 @@
 int main() {
     Deck deck;
     deck.shuffle();
+    deck._print();
 
     Player player1;
 
