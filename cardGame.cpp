@@ -26,7 +26,6 @@ namespace pack52 {
 Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
 Deck::Deck() {
-    std::cout << "Creating deck, with " << pack52::NUM_SUITS << " suits and " << pack52::NUM_RANKS << " ranks.\n" << std::endl;
     for (int s=1; s<=pack52::NUM_SUITS; ++s) {
         for (int r=1; r<=pack52::NUM_RANKS; ++r) {
             cards_.push_back(new Card(s, r, this));
@@ -55,8 +54,6 @@ const Card * Deck::drawCard() {
 
     const Card * newCard = cards_.front();
     cards_.pop_front();
-
-    std::cout << std::endl;
 
     return newCard;
 }
@@ -97,7 +94,7 @@ void Deck::discardCard(const Card * card) {
 }
 void Player::discardCard(const int index) {
     if (index >= hand_.size()) {
-        std::cerr << "ERROR: Index greater than size of hand!\n";
+        std::cerr << "ERROR: Index greater than size of hand!" << std::endl;
         exit(1);
     }
 
@@ -124,7 +121,7 @@ const Card * Player::operator[](const int index) const {
 
 void Player::printHand() const {
     if (hand_.empty()) {
-        std::cout << "Hand is empty!\n" << std::endl;
+        std::cout << "Hand is empty!" << std::endl;
         return;
     }
 

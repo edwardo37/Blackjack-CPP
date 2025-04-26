@@ -6,4 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(Blackjack blackjack.cpp
         card.h
         player.h
-        cardGame.cpp)
+        cardGame.cpp
+        logger.h
+)

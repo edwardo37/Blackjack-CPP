@@ -5,6 +5,13 @@
 
 #include "card.h"
 #include "player.h"
+#include "logger.h"
+
+#ifdef _WIN32
+    auto NULL_DEVICE = "NUL";
+#else
+auto NULL_DEVICE = "/dev/null";
+#endif
 
 
 // Check the score. Also includes ace promotions. Returns if
@@ -63,13 +70,32 @@ public:
 };
 
 
-int main() {
+int main(int argc, char** argv) {
+    Logger logger;
+
+    // Check arguments
+    if (argc > 1) {
+        for (int i = 1; i < argc; ++i) {
+            if (argv[i][0] == '-' && argv[i][1] == 'l') {
+                logger.openFile("blackjack.log");
+            }
+            else {
+                logger.openFile(NULL_DEVICE);
+            }
+        }
+    }
+
+    logger.log("Starting Blackjack.");
+    std::cout << "Welcome to Blackjack!" << std::endl;
+
+    logger.log("Initializing and shuffling 52-card deck.");
     Deck deck;
     deck.shuffle();
 
     std::vector<Player> players;
 
     // Pick number of players
+    logger.log("User picking number of players.");
     int numPlayers = 0;
     while (!numPlayers) {
         std::cout << "Enter number of players: ";
@@ -77,6 +103,7 @@ int main() {
 
         // Check if valid
         if (!std::cin || numPlayers < 2 || numPlayers > 7) {
+            logger.log(Logger::WARNING, "User entered invalid number of players.");
             std::cout << "Number of players must be between 2 and 7." << std::endl;
 
             // Reset and continue
@@ -87,10 +114,12 @@ int main() {
     }
 
     // Create all players
+    logger.log("Creating all players and dealer.");
     const PlayerList BJ_Players(numPlayers);
     Player Dealer;
 
     // Draw the first two cards for everyone
+    logger.log("Drawing first two cards for everyone.");
     for (int i = 0; i < numPlayers; ++i) {
         BJ_Players[i]->drawCard(deck);
         BJ_Players[i]->drawCard(deck);
@@ -105,10 +134,12 @@ int main() {
     }
     updateScore(Dealer);
 
-
     // Check if dealer gets blackjack before first round starts
+    logger.log("Checking in anyone got a Blackjack...");
     if (Dealer.score == 21)
     {
+        logger.log("Dealer won, with a ", Dealer[0]->rank, " and ", Dealer[1]->rank, ", changing to 10 and an ace worth 11.");
+
         std::cout << "DEALER's hand:" << std::endl;
         Dealer.printHand();
         std::cout << "DEALER won. DEALER got a blackjack!\n";
