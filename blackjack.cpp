@@ -59,7 +59,6 @@ public:
 
 
 int main() {
-    std::cout << "---- STARTING GAME ----" << std::endl;
     Deck deck;
     deck.shuffle();
 
@@ -101,7 +100,6 @@ int main() {
     }
     updateScore(Dealer);
 
-    std::cout << "---- INITIALIZED ----" << std::endl;
 
     // Check if dealer gets blackjack before first round starts
     if (Dealer.score == 21)
@@ -109,10 +107,8 @@ int main() {
         std::cout << "DEALER's hand:" << std::endl;
         Dealer.printHand();
         std::cout << "DEALER won. DEALER got a blackjack!\n";
-        std::cout << "---- ENDING GAME ----" << std::endl;
         return 0;
     }
 
-    std::cout << "---- ENDING GAME ----" << std::endl;
     return 0;
 }

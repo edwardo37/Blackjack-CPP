@@ -92,28 +92,20 @@ void Deck::_print() const {
 Player::Player() : score(0) {}
 
 Player::~Player() {
-    std::cout << "Destroying player. Discarding all cards.\n";
-
     if (hand_.empty()) {
-        std::cout << "Hand already discarded... Continuing to destroy player.\n";
         return;
     }
 
     for (const Card * card : hand_) {
         discardCard(0);
     }
-
-    std::cout << std::endl;
 }
 
 
 void Deck::discardCard(const Card * card) {
-    std::cout << "Discarding card to deck...\n" << std::endl;
     cards_.push_back(card);
 }
 void Player::discardCard(const int index) {
-    std::cout << "Discarding card...\n";
-
     if (index >= hand_.size()) {
         std::cerr << "ERROR: Index greater than size of hand!\n";
         return;
@@ -124,13 +116,9 @@ void Player::discardCard(const int index) {
     card->owner_->discardCard(card);
     // Every card is unique in the hand, so I don't feel as bad using erase
     std::erase(hand_, card);
-
-    std::cout << std::endl;
 }
 
 const Card * Player::operator[](const int index) const {
-    std::cout << "Accessing card in hand...\n";
-
     if (hand_.empty()) {
         std::cerr << "ERROR: No cards in hand!\n";
         return nullptr;
@@ -141,14 +129,10 @@ const Card * Player::operator[](const int index) const {
         return nullptr;
     }
 
-    std::cout << std::endl;
-
     return hand_[index];
 }
 
 void Player::printHand() const {
-    std::cout << "Cards in hand:\n";
-
     if (hand_.empty()) {
         std::cout << "Hand is empty!\n" << std::endl;
         return;
