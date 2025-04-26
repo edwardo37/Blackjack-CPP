@@ -68,13 +68,18 @@ const Card * Deck::drawCard() {
 // At first, I thought pop deallocated an object,
 // then I realized I am an idiot who does not know how values and references work
 void Player::drawCard(Deck & deck) {
-    std::cout << "Drawing card..." << std::endl;
+    std::cout << "Drawing card...\n" << std::endl;
 
     hand_.push_front(deck.drawCard());
 }
 
 void Deck::_print() const {
     std::cout << "Cards in deck:\n";
+
+    if (cards_.empty()) {
+        std::cout << "No cards in deck!\n" << std::endl;
+        return;
+    }
 
     for (const Card * card : cards_) {
         std::cout << pack52::RANKS[card->rank-1] << " of " << pack52::SUITS[card->suit-1] << "s\n";
@@ -145,7 +150,7 @@ void Player::printHand() const {
     std::cout << "Cards in hand:\n";
 
     if (hand_.empty()) {
-        std::cout << "Hand is empty!\n";
+        std::cout << "Hand is empty!\n" << std::endl;
         return;
     }
 
