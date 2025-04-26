@@ -1,3 +1,4 @@
+#include <functional>
 #include <iostream>
 #include <vector>
 
@@ -5,6 +6,34 @@
 
 #include "card.h"
 #include "player.h"
+
+
+// Check the score. Also includes ace promotions. Returns if
+void updateScore(Player& player) {
+    // To check for the possibility of ace promotions later.
+    int possibleUniqueScores = 1;
+
+    // Add all values to total score.
+    for (int i = 0; i < player.cardCount(); ++i) {
+        // If an ace, mark it for later
+        if (player[i]->rank == 1) {
+            ++possibleUniqueScores;
+        }
+
+        // Add the smallest score
+        player.score += player[i]->rank;
+    }
+
+    // Attempt to replace aces of value 1 with 11, if it doesn't go over 21
+    // Why the player would choose to put themselves in trouble is beyond me
+    for (int u = 1; u < possibleUniqueScores; ++u) {
+        // Promote ace value -- score is promotable without going over
+        if (player.score + 10 <= 21) {
+            player.score += 10;
+        }
+    }
+}
+
 
 // For safe(er) memory management with a dynamic list of players
 class PlayerList {
@@ -61,6 +90,7 @@ int main() {
     for (int i = 0; i < numPlayers; ++i) {
         BJ_Players[i]->drawCard(deck);
         BJ_Players[i]->drawCard(deck);
+        updateScore(*BJ_Players[i]);
     }
 
     // Draw two for the dealer.
@@ -69,18 +99,12 @@ int main() {
     for (int i = 0; i < 2; ++i) {
         Dealer.drawCard(deck);
     }
+    updateScore(Dealer);
 
     std::cout << "---- INITIALIZED ----" << std::endl;
 
-    // Check if dealer gets blackjack
-    if  (
-        // Any combo
-        Dealer[0]->rank + Dealer[1]->rank == 21 ||
-
-        // Ace promotion
-        (Dealer[0]->rank == 1 && Dealer[1]->rank == 10) ||
-        (Dealer[0]->rank == 10 && Dealer[1]->rank == 1)
-        )
+    // Check if dealer gets blackjack before first round starts
+    if (Dealer.score == 21)
     {
         std::cout << "DEALER's hand:" << std::endl;
         Dealer.printHand();
@@ -89,6 +113,6 @@ int main() {
         return 0;
     }
 
-    std::cout << "----- ENDING GAME -----" << std::endl;
+    std::cout << "---- ENDING GAME ----" << std::endl;
     return 0;
 }

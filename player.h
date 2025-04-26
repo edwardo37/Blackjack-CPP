@@ -12,6 +12,8 @@
 class Player {
     std::deque<const Card *> hand_;
 public:
+    int score;
+
     Player();
     ~Player();
 
@@ -25,6 +27,9 @@ public:
 
     // Print all cards in the hand
     void printHand() const;
+
+    // Access the number of cards
+    [[nodiscard]] unsigned long cardCount() const;
 };
 
 #endif //PLAYER_H

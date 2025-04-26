@@ -89,7 +89,7 @@ void Deck::_print() const {
 }
 
 
-Player::Player() = default;
+Player::Player() : score(0) {}
 
 Player::~Player() {
     std::cout << "Destroying player. Discarding all cards.\n";
@@ -160,3 +160,8 @@ void Player::printHand() const {
 
     std::cout << std::endl;
 }
+
+unsigned long Player::cardCount() const {
+    return hand_.size();
+}
+
