@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <deque>
 
 // For shuffling
 #include <random>
@@ -36,7 +35,6 @@ Deck::Deck() {
 }
 
 Deck::~Deck() {
-    std::cout << "Destroying deck.\n" << std::endl;
     for (const Card* card : cards_) {
         delete card;
     }
@@ -51,10 +49,7 @@ void Deck::shuffle() {
 
 
 const Card * Deck::drawCard() {
-    std::cout << "Retrieving card from deck...\n";
-
     if (cards_.empty()) {
-        std::cerr << "ERROR: No cards in deck!\n";
         return nullptr;
     }
 
@@ -68,16 +63,11 @@ const Card * Deck::drawCard() {
 // At first, I thought pop deallocated an object,
 // then I realized I am an idiot who does not know how values and references work
 void Player::drawCard(Deck & deck) {
-    std::cout << "Drawing card...\n" << std::endl;
-
     hand_.push_front(deck.drawCard());
 }
 
 void Deck::_print() const {
-    std::cout << "Cards in deck:\n";
-
     if (cards_.empty()) {
-        std::cout << "No cards in deck!\n" << std::endl;
         return;
     }
 
@@ -108,7 +98,7 @@ void Deck::discardCard(const Card * card) {
 void Player::discardCard(const int index) {
     if (index >= hand_.size()) {
         std::cerr << "ERROR: Index greater than size of hand!\n";
-        return;
+        exit(1);
     }
 
     const Card * card = hand_[index];
@@ -121,12 +111,12 @@ void Player::discardCard(const int index) {
 const Card * Player::operator[](const int index) const {
     if (hand_.empty()) {
         std::cerr << "ERROR: No cards in hand!\n";
-        return nullptr;
+        exit(1);
     }
 
     if (index >= hand_.size()) {
         std::cerr << "ERROR: Index out of bounds.\n";
-        return nullptr;
+        exit(1);
     }
 
     return hand_[index];
