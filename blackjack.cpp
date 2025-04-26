@@ -20,8 +20,14 @@ void updateScore(Player& player) {
             ++possibleUniqueScores;
         }
 
-        // Add the smallest score
-        player.score += player[i]->rank;
+        // J, Q, K
+        if (player[i]->rank > 10) {
+            player.score += 10;
+        }
+        // Face value (aces included for now)
+        else {
+            player.score += player[i]->rank;
+        }
     }
 
     // Attempt to replace aces of value 1 with 11, if it doesn't go over 21
