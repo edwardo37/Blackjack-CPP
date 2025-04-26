@@ -8,6 +8,19 @@
 // Fitting, I know
 #include <deque>
 
+
+// Lookup tables, for convenience
+namespace pack52 {
+    inline const char* SUITS[] = {
+        "heart", "diamond", "club", "spade"
+    }; constexpr int NUM_SUITS = 4;
+
+    inline const char* RANKS[] = {
+        "ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"
+    }; constexpr int NUM_RANKS = 13;
+}
+
+
 class Deck;
 
 // A common playing card class

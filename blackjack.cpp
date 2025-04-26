@@ -138,7 +138,8 @@ int main(int argc, char** argv) {
     logger.log("Checking in anyone got a Blackjack...");
     if (Dealer.score == 21)
     {
-        logger.log("Dealer won, with a ", Dealer[0]->rank, " and ", Dealer[1]->rank, ", changing to 10 and an ace worth 11.");
+        logger.log("DEALER won, with a ", pack52::RANKS[Dealer[0]->rank - 1], " and ",
+                   pack52::RANKS[Dealer[1]->rank - 1], ", changing to 10 and an ace worth 11.");
 
         std::cout << "DEALER's hand:" << std::endl;
         Dealer.printHand();

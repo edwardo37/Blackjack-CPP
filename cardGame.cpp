@@ -11,18 +11,6 @@
 #include "card.h"
 #include "player.h"
 
-// Lookup tables, for convenience
-namespace pack52 {
-    const char* SUITS[] = {
-        "heart", "diamond", "club", "spade"
-    }; constexpr int NUM_SUITS = 4;
-
-    const char* RANKS[] = {
-        "ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"
-    }; constexpr int NUM_RANKS = 13;
-}
-
-
 Card::Card(const int s, const int r, Deck * o) : suit(s), rank(r), owner_(o) {}
 
 Deck::Deck() {
