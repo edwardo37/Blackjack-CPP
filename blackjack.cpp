@@ -1,9 +1,6 @@
 #include <iostream>
 #include <vector>
 
-#include <algorithm>
-#include <random>
-
 #include <limits>
 
 #include "card.h"
@@ -33,6 +30,7 @@ public:
 
 
 int main() {
+    std::cout << "---- STARTING GAME ----" << std::endl;
     Deck deck;
     deck.shuffle();
 
@@ -56,10 +54,41 @@ int main() {
     }
 
     // Create all players
-    PlayerList BJ_Players(numPlayers);
+    const PlayerList BJ_Players(numPlayers);
     Player Dealer;
 
+    // Draw the first two cards for everyone
+    for (int i = 0; i < numPlayers; ++i) {
+        BJ_Players[i]->drawCard(deck);
+        BJ_Players[i]->drawCard(deck);
+    }
 
+    // Draw two for the dealer.
+    // Only the first will be displayed on each player's turn,
+    // so the player can decide to hit or stand
+    for (int i = 0; i < 2; ++i) {
+        Dealer.drawCard(deck);
+    }
 
+    std::cout << "---- INITIALIZED ----" << std::endl;
+
+    // Check if dealer gets blackjack
+    if  (
+        // Any combo
+        Dealer[0]->rank + Dealer[1]->rank == 21 ||
+
+        // Ace promotion
+        (Dealer[0]->rank == 1 && Dealer[1]->rank == 10) ||
+        (Dealer[0]->rank == 10 && Dealer[1]->rank == 1)
+        )
+    {
+        std::cout << "DEALER's hand:" << std::endl;
+        Dealer.printHand();
+        std::cout << "DEALER won. DEALER got a blackjack!\n";
+        std::cout << "---- ENDING GAME ----" << std::endl;
+        return 0;
+    }
+
+    std::cout << "----- ENDING GAME -----" << std::endl;
     return 0;
 }
