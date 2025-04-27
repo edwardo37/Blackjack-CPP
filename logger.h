@@ -1,5 +1,5 @@
 //
-// Created by tacocat37 on 4/26/25.
+// Created by Cameron on 4/26/25.
 //
 
 #ifndef LOGGER_H
@@ -28,7 +28,7 @@ public:
         }
     }
 
-    // The main reason this is a header-only implementation
+    // The main reason that this is a header-only implementation
     template <typename... Args>
     void log(const Levels level, Args... messages) {
         const time_t now = time(nullptr);

@@ -10,16 +10,16 @@
 #ifdef _WIN32
     auto NULL_DEVICE = "NUL";
 #else
-auto NULL_DEVICE = "/dev/null";
+    auto NULL_DEVICE = "/dev/null";
 #endif
 
 
-// Check the score. Also includes ace promotions. Returns if
+// Check the score. Also includes ace promotions.
 void updateScore(Player& player) {
     // To check for the possibility of ace promotions later.
     int possibleUniqueScores = 1;
 
-    // Add all values to total score.
+    // Add all values to the total score.
     for (int i = 0; i < player.cardCount(); ++i) {
         // If an ace, mark it for later
         if (player[i]->rank == 1) {
@@ -36,10 +36,10 @@ void updateScore(Player& player) {
         }
     }
 
-    // Attempt to replace aces of value 1 with 11, if it doesn't go over 21
+    // Attempt to replace aces of value 1 with 11 if it doesn't go over 21
     // Why the player would choose to put themselves in trouble is beyond me
     for (int u = 1; u < possibleUniqueScores; ++u) {
-        // Promote ace value -- score is promotable without going over
+        // Promote ace value -- the score is promotable without going over
         if (player.score + 10 <= 21) {
             player.score += 10;
         }
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
 
     std::vector<Player> players;
 
-    // Pick number of players
+    // Pick a number of players
     logger.log("User picking number of players.");
     int numPlayers = 0;
     while (!numPlayers) {
@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
     }
     updateScore(Dealer);
 
-    // Check if dealer gets blackjack before first round starts
+    // Check if the dealer gets blackjack before the first round starts
     logger.log("Checking in anyone got a Blackjack...");
     if (Dealer.score == 21)
     {

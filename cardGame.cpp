@@ -45,8 +45,6 @@ const Card * Deck::drawCard() {
 
     return newCard;
 }
-// At first, I thought pop deallocated an object,
-// then I realized I am an idiot who does not know how values and references work
 void Player::drawCard(Deck & deck) {
     hand_.push_front(deck.drawCard());
 }
@@ -71,7 +69,7 @@ Player::~Player() {
         return;
     }
 
-    for (const Card * card : hand_) {
+    for (int i=0; i<=hand_.size(); ++i) {
         discardCard(0);
     }
 }
@@ -89,7 +87,7 @@ void Player::discardCard(const int index) {
     const Card * card = hand_[index];
 
     card->owner_->discardCard(card);
-    // Every card is unique in the hand, so I don't feel as bad using erase
+    // Every card is unique in the hand, so I don't feel as bad using erase()
     std::erase(hand_, card);
 }
 
