@@ -6,15 +6,17 @@
 #define PLAYER_H
 
 #include <deque>
+#include <string>
 
 #include "card.h"
 
 class Player {
     std::deque<const Card *> hand_;
 public:
+    const std::string name;
     int score;
 
-    Player();
+    explicit Player(const char*);
     ~Player();
 
     // Draw a card from a deck

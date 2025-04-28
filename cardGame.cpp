@@ -62,7 +62,7 @@ void Deck::_print() const {
 }
 
 
-Player::Player() : score(0) {}
+Player::Player(const char* n="PLAYER") : name(n), score(0) {}
 
 Player::~Player() {
     if (hand_.empty()) {

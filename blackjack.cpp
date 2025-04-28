@@ -50,9 +50,23 @@ void updateScore(Player& player) {
 // For safe(er) memory management with a dynamic list of players
 class PlayerList {
 public:
-    explicit PlayerList(const int numPlayers) {
-        for (int i = 0; i < numPlayers; ++i) {
-            contents.push_back(new Player);
+    explicit PlayerList(const int numPlayers, Logger& logger) {
+        for (int i=0; i < numPlayers; ++i) {
+            char name[16];
+            while (true) {
+                std::cout << "Enter player " << i+1 << "'s name: ";
+                std::cin.getline(name, 16);
+
+                if (std::cin) {break;}
+
+                // Invalid input
+                logger.log(Logger::WARNING, "User entered invalid name.");
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input." << std::endl;
+            }
+
+            contents.push_back(new Player(name));
         }
     }
 
@@ -107,16 +121,17 @@ int main(int argc, char** argv) {
             std::cout << "Number of players must be between 2 and 7." << std::endl;
 
             // Reset and continue
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             numPlayers = 0;
         }
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     // Create all players
     logger.log("Creating all players and dealer.");
-    const PlayerList BJ_Players(numPlayers);
-    Player Dealer;
+    const PlayerList BJ_Players(numPlayers, logger);
+    Player Dealer("DEALER");
 
     // Draw the first two cards for everyone
     logger.log("Drawing first two cards for everyone.");
@@ -144,7 +159,17 @@ int main(int argc, char** argv) {
         std::cout << "DEALER's hand:" << std::endl;
         Dealer.printHand();
         std::cout << "DEALER won. DEALER got a blackjack!\n";
-        return 0;
+    }
+    for (auto player : BJ_Players.contents) {
+        if (player->score == 21) {
+            logger.log(player->name,
+                " won, with a ", pack52::RANKS[(*player)[0]->rank - 1],
+                " and ", pack52::RANKS[(*player)[1]->rank - 1],
+                ", changing to 10 and an ace worth 11.");
+            std::cout << player->name << "'s hand:" << std::endl;
+            player->printHand();
+            std::cout << player->name << " won. " << player->name << " got a blackjack!\n";
+        }
     }
 
     return 0;
