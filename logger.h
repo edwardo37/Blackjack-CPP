@@ -5,6 +5,12 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#ifdef _WIN32
+inline auto NULL_DEVICE = "NUL";
+#else
+inline auto NULL_DEVICE = "/dev/null";
+#endif
+
 #include <iosfwd>
 #include <fstream>
 #include <cstring>
@@ -19,7 +25,8 @@ public:
         ERROR
     };
 
-    void openFile(const char* fileName) {
+    // Open a file by a string file location. Opens a Win/Unix null device by default
+    void openFile(const char* fileName=NULL_DEVICE) {
         logFile.open(fileName);
 
         if (!logFile.is_open()) {
