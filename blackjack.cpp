@@ -7,6 +7,12 @@
 #include "player.h"
 #include "logger.h"
 
+#ifdef _WIN32
+    auto NULL_DEVICE = "NUL";
+#else
+    auto NULL_DEVICE = "/dev/null";
+#endif
+
 
 // Check the score. Also includes ace promotions.
 void updateScore(Player& player) {
@@ -87,7 +93,7 @@ int main(int argc, char** argv) {
                 logger.openFile("blackjack.log");
             }
             else {
-                logger.openFile();
+                logger.openFile(NULL_DEVICE);
             }
         }
     }
