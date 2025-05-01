@@ -15,6 +15,7 @@ class Player {
 public:
     const std::string name;
     int score;
+    bool isOut;
 
     explicit Player(const char*);
     ~Player();

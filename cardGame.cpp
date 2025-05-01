@@ -46,7 +46,7 @@ const Card * Deck::drawCard() {
     return newCard;
 }
 void Player::drawCard(Deck & deck) {
-    hand_.push_front(deck.drawCard());
+    hand_.push_back(deck.drawCard());
 }
 
 void Deck::_print() const {
@@ -62,7 +62,7 @@ void Deck::_print() const {
 }
 
 
-Player::Player(const char* n="PLAYER") : name(n), score(0) {}
+Player::Player(const char* n="PLAYER") : name(n), score(0), isOut(false) {}
 
 Player::~Player() {
     if (hand_.empty()) {
